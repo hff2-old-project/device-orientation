@@ -13,18 +13,18 @@
 			window.WebSocket = window.MozWebSocket;
 		}
 		if (window.WebSocket) {
-			socket = new WebSocket("wss://2401-203-77-58-94.ngrok.io");
+			socket = new WebSocket("wss://a7cb-203-77-58-94.ngrok.io");
 			socket.onmessage = function (event) {
 				var ta = document.getElementById('responseText');
 				ta.value = ta.value + '\n' + event.data
 			};
 			socket.onopen = function (event) {
 				var ta = document.getElementById('responseText');
-				ta.value = "连接开启!";
+				ta.value = "連結開啟!";
 			};
 			socket.onclose = function (event) {
 				var ta = document.getElementById('responseText');
-				ta.value = ta.value + "连接被关闭";
+				ta.value = ta.value + "連結關閉";
 			};
 		} else {
 			alert("你的浏览器不支持 WebSocket！");
