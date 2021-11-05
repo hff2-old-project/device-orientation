@@ -1,92 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 	<meta charset="UTF-8">
-	<meta name=viewport content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name=viewport content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<title>HTML5 控制裝置陀螺儀</title>
 	<style>
-		body {
-			margin: 50px;
-			font-size: 15px;
+		body{
+			margin:50px;
+			font-size:15px;
 		}
 	</style>
 	<script>
-
-
-		var socket;
-		if (!window.WebSocket) {
-			window.WebSocket = window.MozWebSocket;
-		}
-		if (window.WebSocket) {
-			socket = new WebSocket("ws://10.8.4.33:8080/ws");
-		} else {
-			alert("你的浏览器不支持 WebSocket！");
-		}
-
-		function send(message) {
-			if (!window.WebSocket) {
-				return;
-			}
-			if (socket.readyState == WebSocket.OPEN) {
-				socket.send(message);
-			} else {
-				alert("连接没有开启.");
-			}
-		}
-
-
-		if (window.DeviceOrientationEvent) {
-			window.addEventListener('deviceorientation', function (event) {
-				var a = document.getElementById('alpha'),
-					b = document.getElementById('beta'),
-					g = document.getElementById('gamma'),
-					alpha = event.alpha,
-					beta = event.beta,
-					gamma = event.gamma;
-
-				a.innerHTML = Math.round(alpha);
-				b.innerHTML = Math.round(beta);
-				g.innerHTML = Math.round(gamma);
-
-				let coordinate = [Math.round(alpha), Math.round(beta), Math.round(gamma)].join('-');
-				send(coordinate)
-			}, false);
-		} else {
-			document.querySelector('body').innerHTML = '你的瀏覽器不支援喔';
-		}
+  var mySocket = new WebSocket("ws://10.8.5.9:3000");
+  mySocket.onmessage = function(e) {
+  console.log(e.data);
+}
+	if(window.DeviceOrientationEvent) {
+		window.addEventListener('deviceorientation', function(event) {
+        var a = document.getElementById('alpha'),
+            b = document.getElementById('beta'),
+            g = document.getElementById('gamma'),
+            alpha = event.alpha,
+            beta = event.beta,
+                gamma = event.gamma;
+        
+        a.innerHTML = Math.round(alpha);
+        b.innerHTML = Math.round(beta);
+        g.innerHTML = Math.round(gamma);
+            
+		}, false);
+    }else{
+    document.querySelector('body').innerHTML = '你的瀏覽器不支援喔';
+    }
 	</script>
 </head>
-
 <body>
-	alpha:<span id="alpha"></span><br />
-	beta:<span id="beta"></span><br />
-	gamma:<span id="gamma"></span><br />
+	alpha:<span id="alpha"></span><br/>
+	beta:<span id="beta"></span><br/>
+	gamma:<span id="gamma"></span><br/>
+		
+  <style>
+  #info {
+    position: fixed;
+    z-index: 999;
+    bottom: 20px;
+    left: 0px;
+    background: #222;
+    padding: 20px 30px;
+    color: #fff;
+    box-shadow: rgba(0, 0, 0, .5) 0 0 10px;
+    border-radius: 0 5px 5px 0;
+		font-size:16px;
+  }
+  
+  #info a {
+    color: #0bf;
+    transition: .2s;
+  }
+  
+  #info a:hover {
+    color: #6df;
+  }
+  </style>
 
-	<style>
-		#info {
-			position: fixed;
-			z-index: 999;
-			bottom: 20px;
-			left: 0px;
-			background: #222;
-			padding: 20px 30px;
-			color: #fff;
-			box-shadow: rgba(0, 0, 0, .5) 0 0 10px;
-			border-radius: 0 5px 5px 0;
-			font-size: 16px;
-		}
-
-		#info a {
-			color: #0bf;
-			transition: .2s;
-		}
-
-		#info a:hover {
-			color: #6df;
-		}
-	</style>
-
+  <script>
+  var href = location.href;
+  var page = href.split("demo/");
+  var name = page[1].split("-demo")[0];
+  var title = document.querySelector('title').innerHTML;
+  document.getElementById('infoLink').setAttribute('href', '/articles/' + name + '.html');
+  document.getElementById('infoLink').innerHTML = title.split("demo")[0];
+  </script>
 </body>
-
 </html>
+
