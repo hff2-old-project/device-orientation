@@ -13,7 +13,7 @@
 			window.WebSocket = window.MozWebSocket;
 		}
 		if (window.WebSocket) {
-			socket = new WebSocket("wss://6d5b-203-77-58-94.ngrok.io");
+			socket = new WebSocket("wss://b5d4-203-77-58-94.ngrok.io");
 			socket.onmessage = function (event) {
 				var ta = document.getElementById('responseText');
 				ta.value = ta.value + '\n' + event.data
